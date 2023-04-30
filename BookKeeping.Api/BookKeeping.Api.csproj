@@ -27,6 +27,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookKeeping.DataStore\BookKeeping.DataStore.csproj" />
+    <ProjectReference Include="..\BookKeeping.Repository\BookKeeping.Repository.csproj" />
+    <ProjectReference Include="..\BookKeeping.Services\BookKeeping.Services.csproj" />
   </ItemGroup>
 
 </Project>
