@@ -1,6 +1,8 @@
+using BookKeeping.Api;
 using BookKeeping.DataStore;
 using BookKeeping.Repository;
 using BookKeeping.Services;
+using BookKeeping.Services.Profiles;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,8 +28,10 @@ builder.Services.AddDbContext<BookKeepingDbContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
-builder.Services.AddScoped<ServiceCollectionConfiguartion>();
-builder.Services.AddScoped<RepositoryCollectionConfiguration>();
+builder.Services.ServiceCollection(builder.Services);
+builder.Services.RepositoryCollection(builder.Services);
+
+builder.Services.AddAutoMapper(typeof(BookKeepingProfile).Assembly);
 
 var app = builder.Build();
 
@@ -35,11 +39,16 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<BookKeepingDbContext>();
     dbContext.Database.Migrate();
+    if (dbContext.AccountCategories.Count() <= 0)
+    {
+        dbContext.AccountCategories.AddRange(builder.Services.GetAccountCategories());
+        dbContext.SaveChanges();
+    }
 }
 
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

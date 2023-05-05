@@ -40,7 +40,7 @@ namespace BookKeeping.Repository.Implementation
 
         public async Task<IEnumerable<AccountCategory>> GetAccountCategoriesAsync()
         {
-            return _context.AccountCategories.ToList();
+            return _context.AccountCategories;
         }
 
         public async Task<AccountCategory> GetByIdAsync(Guid id)
@@ -55,9 +55,19 @@ namespace BookKeeping.Repository.Implementation
             return accountCategory;
         }
 
-        public Task<bool> UpdateAsync(AccountCategory accountCategory)
+        public async Task<bool> UpdateAsync(AccountCategory accountCategory)
         {
-            throw new NotImplementedException();
+            var oldAccountCategory = await _context.AccountCategories.FindAsync(accountCategory.Id);
+
+            if (oldAccountCategory == null)
+            {
+                return false;
+            }
+
+            oldAccountCategory.ShortName = accountCategory.ShortName;
+            oldAccountCategory.Name = accountCategory.Name;
+            oldAccountCategory.Description = accountCategory.Description;
+            return true;
         }
     }
 }
