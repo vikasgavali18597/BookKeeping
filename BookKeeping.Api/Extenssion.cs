@@ -1,6 +1,4 @@
 ﻿using BookKeeping.Models;
-using BookKeeping.Repository.Implementation;
-using BookKeeping.Repository.Interfaces;
 using BookKeeping.Services.Implementation;
 using BookKeeping.Services.Interfaces;
 
@@ -11,12 +9,6 @@ namespace BookKeeping.Api
         public static IServiceCollection ServiceCollection(this IServiceCollection service, IServiceCollection services)
         {
             services.AddScoped<IAccountCategoryService, AccountCategoryService>();
-            return services;
-        }
-
-        public static IServiceCollection RepositoryCollection(this IServiceCollection service, IServiceCollection services)
-        {
-            services.AddScoped<IAccountcategoryRepository, AccountCategoryRepository>();
             return services;
         }
 

@@ -1,6 +1,7 @@
 using BookKeeping.Api;
 using BookKeeping.DataStore;
 using BookKeeping.Repository;
+using BookKeeping.Repository.Implementation;
 using BookKeeping.Services;
 using BookKeeping.Services.Profiles;
 using Microsoft.EntityFrameworkCore;
@@ -28,8 +29,8 @@ builder.Services.AddDbContext<BookKeepingDbContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
+builder.Services.AddScoped<UnitOfWork>();
 builder.Services.ServiceCollection(builder.Services);
-builder.Services.RepositoryCollection(builder.Services);
 
 builder.Services.AddAutoMapper(typeof(BookKeepingProfile).Assembly);
 
