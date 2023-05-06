@@ -47,7 +47,12 @@ namespace BookKeeping.Repository.Implementation
 
         public async Task<TEntity> GetByID(Guid id)
         {
-            return await dbSet.FindAsync(id);
+            var entity = await dbSet.FindAsync(id);
+            if (entity == null)
+            {
+                return null;
+            }
+            return entity;
         }
 
         public async Task Insert(TEntity entity)
