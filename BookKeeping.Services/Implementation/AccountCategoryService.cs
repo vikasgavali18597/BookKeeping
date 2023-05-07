@@ -3,6 +3,7 @@ using BookKeeping.DTOs;
 using BookKeeping.Models;
 using BookKeeping.Repository.Implementation;
 using BookKeeping.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookKeeping.Services.Implementation
 {
@@ -25,7 +26,8 @@ namespace BookKeeping.Services.Implementation
 
         public async Task<AccountCategoryDto> GetAccountCategory(Guid id)
         {
-            var accountCategory = await _unitOfWork.accountCategoryRepository.GetByID(id); 
+            //var accountCategory = await _unitOfWork.accountCategoryRepository.GetByID(id);
+            var accountCategory = _unitOfWork.Context.AccountCategories.Include("Accounts").Where(x => x.Id == id);
             return _mapper.Map<AccountCategoryDto>(accountCategory);
         }
 

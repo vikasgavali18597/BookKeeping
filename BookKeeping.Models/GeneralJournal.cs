@@ -8,19 +8,10 @@
 
         public DateTime? Date { get; set; }
 
-        public string? CrAccount { get; set; }
-
-        public string? DrAccount { get; set; }
-
-        public decimal DrAmt { get; set; }
-
-        public decimal CrAmt { get; set; }
-
         public string? Narration { get; set; }
 
-        public Guid DrActCategoryId { get; set; }
+        public virtual Debit Debit { get; set; }
 
-        public Guid CrActCategoryId { get; set; }
-
+        public virtual Credit Credit { get; set; }
     }
 }

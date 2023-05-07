@@ -9,6 +9,7 @@ namespace BookKeeping.Api
         public static IServiceCollection ServiceCollection(this IServiceCollection service, IServiceCollection services)
         {
             services.AddScoped<IAccountCategoryService, AccountCategoryService>();
+            services.AddScoped<IAccountService, AccountService>();
             return services;
         }
 

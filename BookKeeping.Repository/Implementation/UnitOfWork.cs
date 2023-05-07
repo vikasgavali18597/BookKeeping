@@ -10,17 +10,21 @@ namespace BookKeeping.Repository.Implementation
 {
     public class UnitOfWork : IDisposable
     {
-        private BookKeepingDbContext context;
+        private BookKeepingDbContext _context;
 
         public UnitOfWork(BookKeepingDbContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
 
         private GenericRepository<AccountCategory> _accountCategoryRepository;
-     
+        private GenericRepository<Account> _accountRepository;
 
+        public BookKeepingDbContext Context
+        {
+            get { return _context; }
+        }
         public GenericRepository<AccountCategory> accountCategoryRepository
         {
             get
@@ -28,16 +32,29 @@ namespace BookKeeping.Repository.Implementation
 
                 if (this._accountCategoryRepository == null)
                 {
-                    this._accountCategoryRepository = new GenericRepository<AccountCategory>(context);
+                    this._accountCategoryRepository = new GenericRepository<AccountCategory>(_context);
                 }
                 return _accountCategoryRepository;
             }
         }
 
-        
+        public GenericRepository<Account> AccountRepository
+        {
+            get
+            {
+                if (_accountRepository ==  null)
+                {
+                    _accountRepository = new GenericRepository<Account>(_context);
+                }
+
+                return _accountRepository;
+            }
+        }
+
+
         public async Task Save()
         {
-           await context.SaveChangesAsync();
+           await _context.SaveChangesAsync();
         }
 
         private bool disposed = false;
@@ -48,7 +65,7 @@ namespace BookKeeping.Repository.Implementation
             {
                 if (disposing)
                 {
-                    context.Dispose();
+                    _context.Dispose();
                 }
             }
             this.disposed = true;

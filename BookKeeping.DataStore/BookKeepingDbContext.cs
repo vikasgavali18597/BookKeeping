@@ -11,9 +11,12 @@ namespace BookKeeping.DataStore
 
         public DbSet<GeneralJournal> GeneralJournals { get; set; }
 
+        public DbSet<Debit> Debits { get; set; }
+
+        public DbSet<Credit> Credits { get; set; }
+
         public BookKeepingDbContext(DbContextOptions<BookKeepingDbContext> options) :base(options)
         {
-
         }
     }
 }

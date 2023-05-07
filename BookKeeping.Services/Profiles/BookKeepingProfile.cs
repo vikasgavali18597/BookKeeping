@@ -10,6 +10,9 @@ namespace BookKeeping.Services.Profiles
         {
             CreateMap<AccountCategory, AccountCategoryDto>().ReverseMap();
             CreateMap<AccountCategoryDto, AccountCategory>();
+
+
+            CreateMap<Account, AccountDto>().ReverseMap();
         }
     }
 }

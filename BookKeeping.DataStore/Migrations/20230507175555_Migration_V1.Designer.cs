@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookKeeping.DataStore.Migrations
 {
     [DbContext(typeof(BookKeepingDbContext))]
-    [Migration("20230430155533_Migration_V1")]
+    [Migration("20230507175555_Migration_V1")]
     partial class Migration_V1
     {
         /// <inheritdoc />
@@ -70,32 +70,78 @@ namespace BookKeeping.DataStore.Migrations
                     b.ToTable("AccountCategories");
                 });
 
+            modelBuilder.Entity("BookKeeping.Models.Credit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CrAccCatId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CrAccId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("CrAmt")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("GeneralJournalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("GlNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneralJournalId")
+                        .IsUnique();
+
+                    b.ToTable("Credits");
+                });
+
+            modelBuilder.Entity("BookKeeping.Models.Debit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DrAccCatId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DrAccId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("DrAmt")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("GeneralJournalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("GlNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneralJournalId")
+                        .IsUnique();
+
+                    b.ToTable("Debit");
+                });
+
             modelBuilder.Entity("BookKeeping.Models.GeneralJournal", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CrAccount")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CrActCategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("CrAmt")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("DrAccount")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("DrActCategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("DrAmt")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("GLNo")
                         .HasColumnType("nvarchar(max)");
@@ -105,18 +151,54 @@ namespace BookKeeping.DataStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GeneralJournals");
+                    b.ToTable("GeneralJournal");
                 });
 
             modelBuilder.Entity("BookKeeping.Models.Account", b =>
                 {
                     b.HasOne("BookKeeping.Models.AccountCategory", "AccountCategoryCategory")
-                        .WithMany()
+                        .WithMany("Accounts")
                         .HasForeignKey("AccountCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AccountCategoryCategory");
+                });
+
+            modelBuilder.Entity("BookKeeping.Models.Credit", b =>
+                {
+                    b.HasOne("BookKeeping.Models.GeneralJournal", "GeneralJournal")
+                        .WithOne("Credit")
+                        .HasForeignKey("BookKeeping.Models.Credit", "GeneralJournalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GeneralJournal");
+                });
+
+            modelBuilder.Entity("BookKeeping.Models.Debit", b =>
+                {
+                    b.HasOne("BookKeeping.Models.GeneralJournal", "GeneralJournal")
+                        .WithOne("Debit")
+                        .HasForeignKey("BookKeeping.Models.Debit", "GeneralJournalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GeneralJournal");
+                });
+
+            modelBuilder.Entity("BookKeeping.Models.AccountCategory", b =>
+                {
+                    b.Navigation("Accounts");
+                });
+
+            modelBuilder.Entity("BookKeeping.Models.GeneralJournal", b =>
+                {
+                    b.Navigation("Credit")
+                        .IsRequired();
+
+                    b.Navigation("Debit")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
