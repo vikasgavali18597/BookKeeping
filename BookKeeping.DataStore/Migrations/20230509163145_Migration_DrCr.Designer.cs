@@ -4,6 +4,7 @@ using BookKeeping.DataStore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookKeeping.DataStore.Migrations
 {
     [DbContext(typeof(BookKeepingDbContext))]
-    partial class BookKeepingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230509163145_Migration_DrCr")]
+    partial class Migration_DrCr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

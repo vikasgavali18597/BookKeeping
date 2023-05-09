@@ -20,11 +20,25 @@ namespace BookKeeping.Repository.Implementation
 
         private GenericRepository<AccountCategory> _accountCategoryRepository;
         private GenericRepository<Account> _accountRepository;
-
+        private GenericRepository<GeneralJournal> _generalJournalRepository;
         public BookKeepingDbContext Context
         {
             get { return _context; }
         }
+
+        public GenericRepository<GeneralJournal> generalJournalRepository
+        {
+            get
+            {
+                if (_generalJournalRepository == null)
+                {
+                    _generalJournalRepository = new GenericRepository<GeneralJournal>(_context);
+                }
+
+                return _generalJournalRepository;
+            }
+        }
+
         public GenericRepository<AccountCategory> accountCategoryRepository
         {
             get

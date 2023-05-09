@@ -10,6 +10,7 @@ namespace BookKeeping.Api
         {
             services.AddScoped<IAccountCategoryService, AccountCategoryService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IGeneralJournalService, GeneralJournalServices>();
             return services;
         }
 

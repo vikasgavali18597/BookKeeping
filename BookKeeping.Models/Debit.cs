@@ -4,10 +4,6 @@
     {
         public Guid Id { get; set; }
 
-        public string? GlNo { get; set; }
-
-        public DateTime Date { get; set; }
-
         public decimal? DrAmt { get; set; }
 
         public Guid GeneralJournalId { get; set; }

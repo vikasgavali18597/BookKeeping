@@ -13,6 +13,12 @@ namespace BookKeeping.Services.Profiles
 
 
             CreateMap<Account, AccountDto>().ReverseMap();
+
+            CreateMap<GeneralJournal, GeneralJournalDto>().ReverseMap();
+
+            CreateMap<Debit, DebitDto>().ReverseMap();
+
+            CreateMap<Credit, CreditDto>().ReverseMap();
         }
     }
 }
