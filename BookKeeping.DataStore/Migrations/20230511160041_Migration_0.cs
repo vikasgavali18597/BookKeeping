@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BookKeeping.DataStore.Migrations
 {
     /// <inheritdoc />
-    public partial class Migration_V1 : Migration
+    public partial class Migration_0 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,7 +26,7 @@ namespace BookKeeping.DataStore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GeneralJournal",
+                name: "GeneralJournals",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -36,7 +36,7 @@ namespace BookKeeping.DataStore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GeneralJournal", x => x.Id);
+                    table.PrimaryKey("PK_GeneralJournals", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,8 +65,6 @@ namespace BookKeeping.DataStore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GlNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CrAmt = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     GeneralJournalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CrAccId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -76,20 +74,18 @@ namespace BookKeeping.DataStore.Migrations
                 {
                     table.PrimaryKey("PK_Credits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Credits_GeneralJournal_GeneralJournalId",
+                        name: "FK_Credits_GeneralJournals_GeneralJournalId",
                         column: x => x.GeneralJournalId,
-                        principalTable: "GeneralJournal",
+                        principalTable: "GeneralJournals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Debit",
+                name: "Debits",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GlNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DrAmt = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     GeneralJournalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DrAccId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -97,11 +93,11 @@ namespace BookKeeping.DataStore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Debit", x => x.Id);
+                    table.PrimaryKey("PK_Debits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Debit_GeneralJournal_GeneralJournalId",
+                        name: "FK_Debits_GeneralJournals_GeneralJournalId",
                         column: x => x.GeneralJournalId,
-                        principalTable: "GeneralJournal",
+                        principalTable: "GeneralJournals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -118,8 +114,8 @@ namespace BookKeeping.DataStore.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Debit_GeneralJournalId",
-                table: "Debit",
+                name: "IX_Debits_GeneralJournalId",
+                table: "Debits",
                 column: "GeneralJournalId",
                 unique: true);
         }
@@ -134,13 +130,13 @@ namespace BookKeeping.DataStore.Migrations
                 name: "Credits");
 
             migrationBuilder.DropTable(
-                name: "Debit");
+                name: "Debits");
 
             migrationBuilder.DropTable(
                 name: "AccountCategories");
 
             migrationBuilder.DropTable(
-                name: "GeneralJournal");
+                name: "GeneralJournals");
         }
     }
 }

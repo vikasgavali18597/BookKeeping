@@ -9,9 +9,7 @@ namespace BookKeeping.DTOs
 {
     public class GeneralJournalDto
     {
-        public string GlNO { get; set; }
 
-        public DateTime Date { get; set; }
 
         public string Narration { get; set; }
 

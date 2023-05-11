@@ -15,6 +15,7 @@ namespace BookKeeping.DataStore
 
         public DbSet<Credit> Credits { get; set; }
 
+
         public BookKeepingDbContext(DbContextOptions<BookKeepingDbContext> options) :base(options)
         {
         }

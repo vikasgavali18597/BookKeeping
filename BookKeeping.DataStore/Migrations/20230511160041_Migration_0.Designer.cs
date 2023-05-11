@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookKeeping.DataStore.Migrations
 {
     [DbContext(typeof(BookKeepingDbContext))]
-    [Migration("20230507175555_Migration_V1")]
-    partial class Migration_V1
+    [Migration("20230511160041_Migration_0")]
+    partial class Migration_0
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -85,14 +85,8 @@ namespace BookKeeping.DataStore.Migrations
                     b.Property<decimal?>("CrAmt")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("GeneralJournalId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("GlNo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -108,9 +102,6 @@ namespace BookKeeping.DataStore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("DrAccCatId")
                         .HasColumnType("uniqueidentifier");
 
@@ -123,15 +114,12 @@ namespace BookKeeping.DataStore.Migrations
                     b.Property<Guid>("GeneralJournalId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("GlNo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GeneralJournalId")
                         .IsUnique();
 
-                    b.ToTable("Debit");
+                    b.ToTable("Debits");
                 });
 
             modelBuilder.Entity("BookKeeping.Models.GeneralJournal", b =>
@@ -151,7 +139,7 @@ namespace BookKeeping.DataStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GeneralJournal");
+                    b.ToTable("GeneralJournals");
                 });
 
             modelBuilder.Entity("BookKeeping.Models.Account", b =>
